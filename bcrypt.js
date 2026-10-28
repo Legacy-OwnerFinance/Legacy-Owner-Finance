@@ -17,6 +17,8 @@
       var exports = {};
       factory(exports, global.crypto);
       global.bcrypt = preferDefault(exports);
+      global.dcodeIO = global.dcodeIO || {};
+      global.dcodeIO.bcrypt = global.bcrypt;
     })();
   }
 })(

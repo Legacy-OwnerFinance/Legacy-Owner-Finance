@@ -1,7 +1,17 @@
 (function(){
 const S=window.AppState,$=s=>document.querySelector(s);
 const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let tab=location.hash.slice(1)||'inventory',F={q:'',city:'',area:'',beds:'',baths:'',maxDown:'',maxMonthly:'',maxPrice:'',status:'',sort:'priceAsc'},map=null;
+const initTab=()=>{
+  const h=location.hash.slice(1);
+  if(h)return h;
+  const p=location.pathname.toLowerCase();
+  if(p.includes('/login')||p.includes('/register')||p.includes('/forgot-password')||p.includes('/reset-password'))return 'auth';
+  if(p.includes('/admin'))return 'admin';
+  if(p.includes('/dashboard'))return 'dashboard';
+  if(p.includes('/guides'))return 'guides';
+  return 'inventory';
+};
+let tab=initTab(),F={q:'',city:'',area:'',beds:'',baths:'',maxDown:'',maxMonthly:'',maxPrice:'',status:'',sort:'priceAsc'},map=null;
 
 const L10N={
   en:{
@@ -396,7 +406,7 @@ function bind(){const r=$('#app-root');
    if(t.id==='roleSel'){$('#agentFields').style.display=t.value==='AGENT'?'':'none';$('#buyerFields').style.display=t.value==='AGENT'?'none':'';}
    if(t.id==='noAgent'){$('#inv').disabled=t.checked;if(t.checked)$('#inv').value='';}});
   const sub=(id,fn)=>{const el=$(id);if(el)el.onsubmit=wrap(()=>fn(fd(el)));};
-  sub('#loginF',v=>{S.login(v.email,v.password);go('dashboard');});
+  sub('#loginF',v=>{const u=S.login(v.email,v.password);go(u&&u.role==='ADMIN'?'admin':'dashboard');});
   sub('#regF',v=>{S.register(v);go('dashboard');});
   sub('#profF',v=>{S.updateProfile(v);alert(tr('savedAlert'));});
   sub('#pwF',v=>{S.changePassword(v.cur,v.pw);alert(tr('pwUpdatedAlert'));});
