@@ -9,7 +9,7 @@
   <title>Legacy - Owner Finance | Brokerage By: KLC Real Estate, LLC</title>
   <script>
     (function() {
-      var fallback = "https://carefully-hair-lite-worth.trycloudflare.com";
+      var fallback = "https://finish-screenshots-broadcast-slowly.trycloudflare.com";
       var prefix = "/Legacy-Owner-Finance";
       var rawPath = window.location.pathname || "/";
       var subPath = rawPath.indexOf(prefix) === 0 ? rawPath.slice(prefix.length) : rawPath;
@@ -20,15 +20,25 @@
       var suffix = pathParam
         ? pathParam
         : subPath + (window.location.search || "") + (window.location.hash || "");
+      var apiUrl = "https://api.github.com/repos/TheRivasLegacyGroup/Legacy-Owner-Finance/contents/tunnel-url.json?t=" + Date.now();
       var rawUrl = "https://raw.githubusercontent.com/TheRivasLegacyGroup/Legacy-Owner-Finance/main/tunnel-url.json?t=" + Date.now();
-      fetch(rawUrl, { cache: "no-store" })
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-          var target = (data && data.url) ? data.url : fallback;
+      fetch(apiUrl, { cache: "no-store", headers: { "Accept": "application/vnd.github.v3+json" } })
+        .then(function(r) { if (!r.ok) throw new Error("api"); return r.json(); })
+        .then(function(meta) {
+          var decoded = JSON.parse(atob((meta.content || "").replace(/\s/g, "")));
+          var target = (decoded && decoded.url) ? decoded.url : fallback;
           window.location.replace(target + suffix);
         })
         .catch(function() {
-          window.location.replace(fallback + suffix);
+          fetch(rawUrl, { cache: "no-store" })
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+              var target = (data && data.url) ? data.url : fallback;
+              window.location.replace(target + suffix);
+            })
+            .catch(function() {
+              window.location.replace(fallback + suffix);
+            });
         });
     })();
   </script>
@@ -37,7 +47,7 @@
   <div>
     <h1 style="font-size: 1.4rem; margin-bottom: 0.5rem;">Legacy - Owner Finance</h1>
     <p style="font-size: 0.85rem; color: #c8a24a; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 0;">Brokerage By: KLC Real Estate, LLC</p>
-    <p style="margin-top: 1.5rem;"><a id="direct-link" href="https://carefully-hair-lite-worth.trycloudflare.com" style="color: #c8a24a; font-weight: 600;">Opening Legacy - Owner Finance... Tap here if not redirected &rarr;</a></p>
+    <p style="margin-top: 1.5rem;"><a id="direct-link" href="https://finish-screenshots-broadcast-slowly.trycloudflare.com" style="color: #c8a24a; font-weight: 600;">Opening Legacy - Owner Finance... Tap here if not redirected &rarr;</a></p>
   </div>
 </body>
 </html>
