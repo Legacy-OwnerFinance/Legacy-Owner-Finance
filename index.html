@@ -10,8 +10,16 @@
   <script>
     (function() {
       var fallback = "https://carefully-hair-lite-worth.trycloudflare.com";
+      var prefix = "/Legacy-Owner-Finance";
+      var rawPath = window.location.pathname || "/";
+      var subPath = rawPath.indexOf(prefix) === 0 ? rawPath.slice(prefix.length) : rawPath;
+      if (!subPath || subPath === "/index.html" || subPath === "/app.html") {
+        subPath = "";
+      }
       var pathParam = new URLSearchParams(window.location.search).get("p") || "";
-      var suffix = pathParam ? pathParam : ((window.location.search || "") + (window.location.hash || ""));
+      var suffix = pathParam
+        ? pathParam
+        : subPath + (window.location.search || "") + (window.location.hash || "");
       var rawUrl = "https://raw.githubusercontent.com/TheRivasLegacyGroup/Legacy-Owner-Finance/main/tunnel-url.json?t=" + Date.now();
       fetch(rawUrl, { cache: "no-store" })
         .then(function(r) { return r.json(); })
