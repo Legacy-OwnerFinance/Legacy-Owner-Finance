@@ -1,0 +1,337 @@
+:root {
+  --paper: #f7f4ef;
+  --ink: #0f172a;
+  --navy: #0f172a;
+  --navy-soft: #19222d;
+  --muted: #5c6570;
+  --line: #e4ddd2;
+  --gold: #9b784c;
+  --gold-soft: #c9a97a;
+  --ivory: #f7f4ef;
+  --white: #fffcf8;
+  --terracotta: #9b784c;
+  --emerald: #16a34a;
+  --amber: #d97706;
+  --red: #dc2626;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, .serif {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  letter-spacing: -0.025em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.kicker {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.68rem 1.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 150ms ease;
+  line-height: 1.2;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--navy);
+  color: var(--ivory);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--navy-soft);
+}
+
+.btn-gold {
+  background: var(--gold);
+  color: #ffffff;
+}
+
+.btn-gold:hover:not(:disabled) {
+  background: #84653d;
+}
+
+.btn-ghost {
+  border: 1px solid var(--line);
+  background: rgba(255, 252, 248, 0.85);
+  color: var(--ink);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: #ffffff;
+  border-color: var(--gold);
+}
+
+.btn-green {
+  background: #16a34a;
+  color: #ffffff;
+  border-color: #15803d;
+}
+
+.btn-green:hover:not(:disabled) {
+  background: #15803d;
+}
+
+.btn-yellow {
+  background: #d97706;
+  color: #ffffff;
+  border-color: #b45309;
+}
+
+.btn-yellow:hover:not(:disabled) {
+  background: #b45309;
+}
+
+.btn-red {
+  background: #dc2626;
+  color: #ffffff;
+  border-color: #b91c1c;
+}
+
+.btn-red:hover:not(:disabled) {
+  background: #b91c1c;
+}
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  box-shadow: 0 12px 34px rgba(15, 23, 42, 0.05);
+}
+
+.field {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: #ffffff;
+  border-radius: 0.85rem;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.92rem;
+  color: var(--ink);
+  font-family: inherit;
+}
+
+.field:focus {
+  outline: 2px solid rgba(155, 120, 76, 0.28);
+  border-color: var(--gold);
+}
+
+.label {
+  display: block;
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.35rem;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-radius: 999px;
+  padding: 0.28rem 0.7rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.badge-ivory {
+  background: rgba(255, 252, 248, 0.95);
+  color: var(--navy);
+  border: 1px solid var(--line);
+}
+
+.badge-navy {
+  background: var(--navy);
+  color: var(--ivory);
+}
+
+.badge-gold {
+  background: var(--gold);
+  color: #ffffff;
+}
+
+.badge-soft {
+  background: #f3e7d4;
+  color: #6d5330;
+}
+
+/* Status Badges */
+.status-AVAILABLE {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #86efac;
+}
+
+.status-COMING_SOON {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.status-PENDING, .status-PENDING_NO_EM, .status-PENDING_EM {
+  background: #ffedd5;
+  color: #9a3412;
+  border: 1px solid #fdba74;
+}
+
+.status-SOLD {
+  background: #e2e8f0;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+
+/* Offer Status Colors (Green = Accepted, Red = Rejected, Yellow = Counter Offer) */
+.offer-card-accepted {
+  background: #ecfdf5 !important;
+  border: 2px solid #16a34a !important;
+  color: #064e3b;
+}
+
+.offer-card-countered {
+  background: #fefce8 !important;
+  border: 2px solid #d97706 !important;
+  color: #713f12;
+}
+
+.offer-card-rejected {
+  background: #fef2f2 !important;
+  border: 2px solid #dc2626 !important;
+  color: #7f1d1d;
+}
+
+.offer-card-submitted {
+  background: var(--white);
+  border: 1px solid var(--line);
+}
+
+.offer-badge-accepted {
+  background: #16a34a !important;
+  color: #ffffff !important;
+  border: 1px solid #15803d;
+}
+
+.offer-badge-countered {
+  background: #d97706 !important;
+  color: #ffffff !important;
+  border: 1px solid #b45309;
+}
+
+.offer-badge-rejected {
+  background: #dc2626 !important;
+  color: #ffffff !important;
+  border: 1px solid #b91c1c;
+}
+
+.offer-badge-submitted {
+  background: #e2e8f0;
+  color: #1e293b;
+  border: 1px solid #cbd5e1;
+}
+
+.lang-toggle {
+  display: inline-flex;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #ffffff;
+}
+
+.lang-toggle button {
+  padding: 0.35rem 0.72rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.lang-toggle button.is-on {
+  background: var(--navy);
+  color: var(--ivory);
+}
+
+.legacy-pin {
+  background: transparent;
+  border: 0;
+}
+
+.legacy-pin span {
+  display: block;
+  height: 18px;
+  width: 18px;
+  border: 2.5px solid #ffffff;
+  border-radius: 999px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.4);
+  transition: transform 150ms ease;
+}
+
+.legacy-pin span:hover {
+  transform: scale(1.25);
+}
+
+.leaflet-container {
+  font-family: inherit;
+  z-index: 1;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(15, 23, 42, 0.68);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.modal-panel {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 1.5rem;
+  max-width: 64rem;
+  width: 100%;
+  max-height: 92vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 60px rgba(15, 23, 42, 0.35);
+}

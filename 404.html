@@ -1,53 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
-  <title>Legacy - Owner Finance | Brokerage By: KLC Real Estate, LLC</title>
-  <script>
-    (function() {
-      var fallback = "https://annex-beach-accessory-shakira.trycloudflare.com";
-      var prefix = "/Legacy-Owner-Finance";
-      var rawPath = window.location.pathname || "/";
-      var subPath = rawPath.indexOf(prefix) === 0 ? rawPath.slice(prefix.length) : rawPath;
-      if (!subPath || subPath === "/index.html" || subPath === "/app.html") {
-        subPath = "";
-      }
-      var pathParam = new URLSearchParams(window.location.search).get("p") || "";
-      var suffix = pathParam
-        ? pathParam
-        : subPath + (window.location.search || "") + (window.location.hash || "");
-      var apiUrl = "https://api.github.com/repos/TheRivasLegacyGroup/Legacy-Owner-Finance/contents/tunnel-url.json?t=" + Date.now();
-      var rawUrl = "https://raw.githubusercontent.com/TheRivasLegacyGroup/Legacy-Owner-Finance/main/tunnel-url.json?t=" + Date.now();
-      fetch(apiUrl, { cache: "no-store", headers: { "Accept": "application/vnd.github.v3+json" } })
-        .then(function(r) { if (!r.ok) throw new Error("api"); return r.json(); })
-        .then(function(meta) {
-          var decoded = JSON.parse(atob((meta.content || "").replace(/\s/g, "")));
-          var target = (decoded && decoded.url) ? decoded.url : fallback;
-          window.location.replace(target + suffix);
-        })
-        .catch(function() {
-          fetch(rawUrl, { cache: "no-store" })
-            .then(function(r) { return r.json(); })
-            .then(function(data) {
-              var target = (data && data.url) ? data.url : fallback;
-              window.location.replace(target + suffix);
-            })
-            .catch(function() {
-              window.location.replace(fallback + suffix);
-            });
-        });
-    })();
-  </script>
-</head>
-<body style="font-family: system-ui, sans-serif; background: #0f1f38; color: #f9f6f0; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; text-align: center;">
-  <div>
-    <h1 style="font-size: 1.4rem; margin-bottom: 0.5rem;">Legacy - Owner Finance</h1>
-    <p style="font-size: 0.85rem; color: #c8a24a; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 0;">Brokerage By: KLC Real Estate, LLC</p>
-    <p style="margin-top: 1.5rem;"><a id="direct-link" href="https://annex-beach-accessory-shakira.trycloudflare.com" style="color: #c8a24a; font-weight: 600;">Opening Legacy - Owner Finance... Tap here if not redirected &rarr;</a></p>
-  </div>
-</body>
-</html>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Legacy - Owner Finance</title><link rel="icon" href="favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+<link rel="stylesheet" href="styles.css">
+<style>body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;margin:0}input,select,textarea,button{font:inherit;margin:3px 0;padding:6px 8px}form input,form textarea{display:block;width:100%;box-sizing:border-box}.filters input,.filters select{width:auto;display:inline-block}nav button.active{background:#1f2937;color:#fff}table{width:100%;border-collapse:collapse;font-size:14px}td,th{border-bottom:1px solid #eee;padding:6px;text-align:left}</style>
+</head><body><div id="app-root"><p style="padding:24px">Loading Legacy - Owner Finance…</p></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="bcrypt.js"></script><script src="i18n.js"></script><script src="app-state.js"></script><script src="app-ui.js"></script>
+</body></html>

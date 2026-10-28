@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Home photo coming soon">
+  <rect width="1600" height="900" fill="#204037"/>
+  <rect x="0" y="620" width="1600" height="280" fill="#1a342d"/>
+  <path d="M430 610 L800 280 L1170 610 Z" fill="#b0894f"/>
+  <rect x="520" y="610" width="560" height="210" fill="#f3eee4"/>
+  <rect x="740" y="690" width="120" height="130" fill="#8f3d2c"/>
+  <rect x="580" y="660" width="110" height="90" fill="#204037"/>
+  <rect x="910" y="660" width="110" height="90" fill="#204037"/>
+  <text x="800" y="180" text-anchor="middle" fill="#fffcf7" font-family="Georgia, serif" font-size="42">Casas Dueño a Dueño</text>
+  <text x="800" y="840" text-anchor="middle" fill="#d9d0c3" font-family="system-ui, sans-serif" font-size="28">Photos in gallery link</text>
+</svg>
