@@ -457,7 +457,7 @@ function drawMap(){if(!window.L||!$('#inventory-map'))return;if(map){map.remove(
      ?`<b>${title(l)}</b><br>${S.money(l.askingPrice)} · <a href="#" data-open="${l.id}">${tr('viewDetails')}</a>`
      :`<b>📍 ${partialAddr(l)}</b><br><a href="#" data-open="${l.id}">${tr('viewPhotos')}</a> · <a href="#auth" data-register="1">${tr('loginPromptLink')}</a>`;
    L.marker([lat,lng]).addTo(map).bindPopup(popupHtml);});
-  if(pts.length)map.fitBounds(pts,{padding:[30,30]});}
+  if(pts.length)map.fitBounds(pts,{padding:[30,30],animate:false});}
 
 function openListing(id){const l=S.listing(id);if(!l)return;S.recordView(id);const ph=(l.photoUrls&&l.photoUrls.length?l.photoUrls:[l.photoUrl||'listing-placeholder.svg']);
   if(!S.user){
@@ -530,25 +530,35 @@ function admin(){if(!S.isAdmin())return `<p style="padding:18px">${tr('adminsOnl
    <td><select data-status="${l.id}">${S.STATUSES.map(s=>`<option value="${s}" ${l.status===s?'selected':''}>${S.statusText(s)}</option>`).join('')}</select></td>
    <td><input data-f="askingPrice" type="number" value="${l.askingPrice/100}" style="width:90px"></td><td><input data-f="downPayment" type="number" value="${l.downPayment/100}" style="width:80px"></td><td><input data-f="monthlyPayment" type="number" value="${l.monthlyPayment/100}" style="width:80px"></td><td><button data-save="${l.id}">${tr('save')}</button></td></tr>`).join('')}</table></div></section>`;}
 
-function render(){const root=$('#app-root');if(!S.data)return;document.documentElement.lang=S.lang;
+function render(){const root=$('#app-root');if(!S.data)return;document.documentElement.lang=S.lang;if(map){try{map.stop();map.off();map.remove();}catch(e){}map=null;}
   const body={inventory,guides,dashboard,admin,auth}[tab]||inventory;root.innerHTML=header()+`<main>${body()}</main><footer style="padding:18px;font-size:12px;text-align:center">© Legacy - Owner Finance · Brokerage By: KLC Real Estate, LLC</footer>`;bind();if(tab==='inventory')drawMap();}
 function bind(){const r=$('#app-root');
-  r.onclick=wrap(e=>{const t=e.target.closest('[data-tab],[data-lang],[data-open],[data-fav],[data-acc],[data-rej],[data-ctr],[data-reset],[data-save],[data-client],[data-register],#logout,#forgot');if(!t)return;const d=t.dataset;
-   if(d.register)return go('auth','#regF [name="name"]');
-   if(d.tab)return go(d.tab);if(d.lang)return S.setLang(d.lang);if(d.fav)return S.toggleFavorite(d.fav);if(d.open)return openListing(d.open);if(t.id==='logout'){S.logout();return go('inventory');}
-   if(t.id==='forgot')return openForgotModal();
-   if(d.acc)return S.respondOffer(d.acc,'ACCEPTED');if(d.rej)return S.respondOffer(d.rej,'REJECTED');
-   if(d.ctr){const p=prompt('Counter price $'),dn=prompt('Counter down $'),mo=prompt('Counter monthly $'),n=prompt('Admin notes')||'';if(p)S.respondOffer(d.ctr,'COUNTERED',{counterPrice:p,counterDown:dn,counterMonthly:mo,adminNotes:n});return;}
-   if(d.reset)return openAdminResetModal(d.reset);
-   if(d.save){const row=r.querySelector(`[data-row="${d.save}"]`),p={};row.querySelectorAll('[data-f]').forEach(i=>p[i.dataset.f]=Math.round(+i.value*100));S.updateListing(d.save,p);return alert(tr('savedAlert'));}
-   if(d.client){const c=S.data.users.find(u=>u.id===d.client);const of=S.data.offers.filter(o=>o.userId===c.id);modal(`<h2>${esc(c.name)}</h2><p>${esc(c.email)} · ${esc(c.phone)}</p><h3>${tr('favorites')}</h3><ul>${S.data.favorites.filter(f=>f.userId===c.id).map(f=>`<li>${esc((S.listing(f.listingId)||{}).address)}</li>`).join('')}</ul><h3>${tr('myOffers')}</h3><ul>${of.map(o=>`<li>${esc((S.listing(o.listingId)||{}).address)} ${S.money(o.offerPrice)} ${offerBadge(o.status)}</li>`).join('')}</ul>`);}
-  });
+  r.onclick=async e=>{
+   const t=e.target.closest('[data-tab],[data-lang],[data-open],[data-fav],[data-acc],[data-rej],[data-ctr],[data-reset],[data-save],[data-client],[data-register],#logout,#forgot');
+   if(!t)return;
+   e.preventDefault();
+   try{
+     const d=t.dataset;
+     if(d.register)return go('auth','#regF [name="name"]');
+     if(d.tab)return go(d.tab);if(d.lang)return S.setLang(d.lang);if(d.fav)return S.toggleFavorite(d.fav);if(d.open)return openListing(d.open);if(t.id==='logout'){S.logout();return go('inventory');}
+     if(t.id==='forgot')return openForgotModal();
+     if(d.acc)return S.respondOffer(d.acc,'ACCEPTED');if(d.rej)return S.respondOffer(d.rej,'REJECTED');
+     if(d.ctr){const p=prompt('Counter price $'),dn=prompt('Counter down $'),mo=prompt('Counter monthly $'),n=prompt('Admin notes')||'';if(p)S.respondOffer(d.ctr,'COUNTERED',{counterPrice:p,counterDown:dn,counterMonthly:mo,adminNotes:n});return;}
+     if(d.reset)return openAdminResetModal(d.reset);
+     if(d.save){const row=r.querySelector(`[data-row="${d.save}"]`),p={};row.querySelectorAll('[data-f]').forEach(i=>p[i.dataset.f]=Math.round(+i.value*100));S.updateListing(d.save,p);return alert(tr('savedAlert'));}
+     if(d.client){const c=S.data.users.find(u=>u.id===d.client);const of=S.data.offers.filter(o=>o.userId===c.id);modal(`<h2>${esc(c.name)}</h2><p>${esc(c.email)} · ${esc(c.phone)}</p><h3>${tr('favorites')}</h3><ul>${S.data.favorites.filter(f=>f.userId===c.id).map(f=>`<li>${esc((S.listing(f.listingId)||{}).address)}</li>`).join('')}</ul><h3>${tr('myOffers')}</h3><ul>${of.map(o=>`<li>${esc((S.listing(o.listingId)||{}).address)} ${S.money(o.offerPrice)} ${offerBadge(o.status)}</li>`).join('')}</ul>`);}
+   }catch(err){alert(err.message);}
+  };
   const f=$('#filters');if(f){f.oninput=f.onchange=e=>{F=Object.assign(F,fd(f));const pos=e.target.name==='q'?e.target.selectionStart:null;render();if(pos!=null){const q=$('#filters [name=q]');q.focus();q.setSelectionRange(pos,pos);}};f.onsubmit=e=>e.preventDefault();}
-  r.onchange=wrap(async e=>{const t=e.target;if(t.dataset.status)return S.setListingStatus(t.dataset.status,t.value);
-   if(t.id==='avatar'&&t.files[0])return S.uploadAvatar(t.files[0]);if(t.id==='docUp'&&t.files[0])return S.uploadDocument(t.files[0]);
-   if(t.dataset.txdoc&&t.files[0])return S.uploadDocument(t.files[0],{docType:t.dataset.txdoc,offerId:t.dataset.offer,listingId:t.dataset.listing});
-   if(t.id==='roleSel'){$('#agentFields').style.display=t.value==='AGENT'?'':'none';$('#buyerFields').style.display=t.value==='AGENT'?'none':'';}
-   if(t.id==='noAgent'){$('#inv').disabled=t.checked;if(t.checked)$('#inv').value='';}});
+  r.onchange=async e=>{
+   try{
+     const t=e.target;if(t.dataset.status)return S.setListingStatus(t.dataset.status,t.value);
+     if(t.id==='avatar'&&t.files&&t.files[0])return await S.uploadAvatar(t.files[0]);if(t.id==='docUp'&&t.files&&t.files[0])return await S.uploadDocument(t.files[0]);
+     if(t.dataset.txdoc&&t.files&&t.files[0])return await S.uploadDocument(t.files[0],{docType:t.dataset.txdoc,offerId:t.dataset.offer,listingId:t.dataset.listing});
+     if(t.id==='roleSel'){$('#agentFields').style.display=t.value==='AGENT'?'':'none';$('#buyerFields').style.display=t.value==='AGENT'?'none':'';}
+     if(t.id==='noAgent'){$('#inv').disabled=t.checked;if(t.checked)$('#inv').value='';}
+   }catch(err){alert(err.message);}
+  };
   const sub=(id,fn)=>{const el=$(id);if(el)el.onsubmit=wrap(()=>fn(fd(el)));};
   sub('#loginF',v=>{const u=S.login(v.email,v.password);go(u&&u.role==='ADMIN'?'admin':'dashboard');});
   sub('#regF',v=>{S.register(v);go('dashboard');});
